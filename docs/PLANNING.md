@@ -30,7 +30,11 @@ R: Esperamos que as **duas APIs** e o VectorDB funcionem localmente via Docker c
 
 # Escolha de tecnologias e frameworks
 
+Entendendo a escolhas para esse projeto
+
 ## Backend API Framework
+
+[FastAPI Best Practices](https://github.com/zhanymkanov/fastapi-best-practices)
 
 FastAPI: fastAPI tem se mostrado como um dos melhores frameworks para backend python
 
@@ -39,3 +43,19 @@ Rapidez: compara-se com apis escritas em node e go
 Suporte para operações assincronas: Modelos LLM, principalmente quando executados localmente, podem ter requisições demoradas e o suporte async é fundamental para nao haver bloqueio no servidor. Permitindo assim lidar com muitiplas requisições recorrentes de forma eficiente
 
 Baseada em starlette e pydantic: altamente performatica para ASGI (Asynchronous Server Gateway Interface) e o Pydantic permite validação e parsing rapido de dados util ao lidar com dados estruturados.
+
+## Vector DB
+
+Dados são representados como vetores em um espaço dimensional.
+
+Esses dados estão relacionados entre si. Embbedings de texto e imagem.
+
+Estou bastante inclinado a escolher a lib em Rust, pois estou aprendendo aos poucos Rust. Então colocar essa DB na stack ira me incentivar ainda mais o uso e aprendizado em Rust.
+
+Também estou praticando um pouco de Go, porém acho que Rust tem um diferencial em performance maior e tenho escutado um pessoal falar mal de GraphQL
+
+Opções:
+
+![alt text](image.png)
+
+
