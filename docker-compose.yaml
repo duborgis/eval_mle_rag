@@ -1,11 +1,11 @@
 
 
 services:
-  vector_db:
-    image: milvusdb/milvus:latest
-    container_name: milvus
+  qdrant:
+    image: qdrant/qdrant
+    container_name: qdrant
     ports:
-      - "19530:19530"
+      - "6333:6333"
 
   load_vector_service:
     build: ./load_vector_service

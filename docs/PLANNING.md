@@ -54,6 +54,9 @@ Estou bastante inclinado a escolher a lib em Rust, pois estou aprendendo aos pou
 
 Também estou praticando um pouco de Go, porém acho que Rust tem um diferencial em performance maior e tenho escutado um pessoal falar mal de GraphQL
 
+possui suporte para python via lib [qdrant-client Docs](https://python-client.qdrant.tech/)
+
+
 Opções:
 
 ![alt text](image.png)
