@@ -62,3 +62,21 @@ Opções:
 ![alt text](image.png)
 
 
+## Modelo LLM para rodar local
+
+Meu Hardware: RTX Nvidia 3060 12GB 
+
+Devido ao modelo Llama ser, open-source e ter uma grande comunidade ao seu redor, esse modelo foi escolhido LLaMA-2 7B, pois ele é compativel com meu hardware.
+
+Podemos também montar um plano de contigencia nesse caso, e caso o meu modelo de timeout, posso enviar a requisição para a API da OpenAI cobrir.
+
+[Sparse Llama: Smaller Models for Efficient GPU Inference](https://neuralmagic.com/blog/24-sparse-llama-smaller-models-for-efficient-gpu-inference/)
+
+
+[How far can we push LLM optimizations?](https://www.linkedin.com/posts/philipp-schmid-a6a2bb196_how-far-can-we-push-llm-optimizations-turns-activity-7267088429379731456-f8mV?utm_source=share&utm_medium=member_desktop)
+
+
+[Qual modelo utilizar com uma RTX 3060 12gb](https://www.reddit.com/r/LocalLLaMA/comments/17mt9eo/lm_studio_which_model_to_use_with_rtx_3060/?tl=pt-br)
+
+Para podemos rodar talvez na CPU também vamos adotar um modelo 3B
+
