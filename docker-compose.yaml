@@ -54,6 +54,8 @@ services:
       - load_vector_service
     ports:
       - "5003:5003"
+    environment:
+      - MODEL_NAME=llama3.2:1b
 
 volumes:
   ollama:

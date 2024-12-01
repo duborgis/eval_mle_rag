@@ -27,8 +27,10 @@ uv-install:
 up:
 	@docker compose up -d --build 
 
+
 down:
 	@docker compose down
+
 
 serve-vector:
 	@cd load_vector_service && uvicorn src.main:app --host 0.0.0.0 --port 5002 --reload
@@ -42,8 +44,20 @@ ask:
 		-H "Authorization: Bearer $(TOKEN_INFERENCE)" \
 		-d '{"question": "O que é a Hotmart?"}'
 
+
+
+
+
+up-n-wait:
+	@chmod +x ./run_n_wait.sh
+	@./run_n_wait.sh
+
+
 create-vector:
-	@curl -X POST http://localhost:8000/create_vector \
-		-H "Content-Type: application/json" \
-		-H "Authorization: Bearer $(TOKEN_VECTOR)" \
-		-d @utils/out/output.txt
+	@chmod +x ./utils/load_n_vectorize_out.sh
+	@cd ./utils && ./load_n_vectorize_out.sh
+
+
+ask-script:
+	@chmod +x ./avaliacao/ask_script.sh
+	@cd ./avaliacao && ./ask_script.sh

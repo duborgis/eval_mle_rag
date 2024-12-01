@@ -1,8 +1,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-import transformers
-import torch
 
 model = "/home/edu/.llama/checkpoints/Llama3.2-1B"
 

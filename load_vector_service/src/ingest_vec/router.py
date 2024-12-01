@@ -1,7 +1,7 @@
-from fastapi import APIRouter, status, File, UploadFile, Form, Depends, Query
+from fastapi import APIRouter, status, File, UploadFile, Form, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from .utils import create_and_store_embeddings, check_collection_exists, delete_collection, vectorize_ask_function
+from .utils import create_and_store_embeddings, vectorize_ask_function
 from ..utils import generic_error_handler
 
 vector_router = APIRouter()
@@ -27,24 +27,19 @@ class TextToVectorData(BaseModel):
             url=url
         )
 
-
-@vector_router.get("/check-collection-exists")
-@generic_error_handler
-async def check_collection_exists_route(
-    collection_name: str = Query(...)
-):
-    collection_exists = check_collection_exists(collection_name)
-    return JSONResponse(content={"detail": collection_exists}, status_code=status.HTTP_200_OK)
-
-
-
-@vector_router.delete("/delete-collection")
-@generic_error_handler
-async def delete_collection_route(
-    collection_name: str = Query(...)
-):
-    delete_collection(collection_name)
-    return JSONResponse(content={"detail": "OK"}, status_code=status.HTTP_200_OK)
+class VectorizeAskData(BaseModel):
+    question: str
+    collection_name: str
+    @classmethod
+    def as_form(
+        cls,
+        question: str = Form(...),
+        collection_name: str = Form(...)
+    ):
+        return cls(
+            question=question,
+            collection_name=collection_name
+        )
 
 
 @vector_router.post("/text-to-vector")
@@ -65,21 +60,6 @@ async def text_to_vector(
     )
 
     return JSONResponse(content={"detail": "OK"}, status_code=status.HTTP_200_OK)
-
-class VectorizeAskData(BaseModel):
-    question: str
-    collection_name: str
-    @classmethod
-    def as_form(
-        cls,
-        question: str = Form(...),
-        collection_name: str = Form(...)
-    ):
-        return cls(
-            question=question,
-            collection_name=collection_name
-        )
-
 
 @vector_router.post("/vectorize-ask")
 @generic_error_handler

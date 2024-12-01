@@ -4,22 +4,12 @@ from qdrant_client import QdrantClient
 # Criar nossa coleção
 from qdrant_client.http.models import Distance, VectorParams
 
-# Criar nossos vetores
-from qdrant_client.http.models import PointStruct
 
-# Pretty Printer
-from pprint import pprint
-
-from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from typing import List, Dict, Any
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-import sys
-import os
 import uuid
 from pynvml import nvmlInit, nvmlDeviceGetCount, NVMLError
-import json
 
 qdrant_client = QdrantClient("localhost", port=6333)
 
