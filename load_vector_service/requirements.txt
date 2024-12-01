@@ -1,0 +1,10 @@
+qdrant-client
+uvicorn
+langchain-community
+sentence-transformers
+nvidia-ml-py3
+fastapi>=0.110.0
+uvicorn>=0.32.0
+requests
+jwt
+python-multipart
