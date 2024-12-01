@@ -84,8 +84,8 @@ Para testar as APIs com essas perguntas, execute o comando make:
 
 Para testar as APIs com o Postman, basta importar a collection `postman/Mle_Hotmart_API.postman_collection.json`
 
-1. Utilize a request `Get Answer` para indexar o texto no vector database, não esqueça de carregar o arquivo `utils/out/output.txt`
-2. Utilize a request `Ask` para testar suas próprias perguntas
+1. Utilize a request `save text vec db` para indexar o texto no vector database, não esqueça de carregar o arquivo `utils/out/output.txt`
+2. Utilize a request `ask llm` para testar suas próprias perguntas
 
 
 ### Teste utilizando Swagger UI
@@ -94,16 +94,16 @@ A FastAPI possui uma interface swagger para teste das APIs, para acessar é nece
 
 Para criar o embedding de um texto, acesse a url:
 
-``` http://localhost:5002/docs ```
+``` http://localhost:5002/docs#/default/text_to_vector_vector_text_to_vector_post ```
 
-Utilize o método POST para criar o embedding
+Utilize o método POST `/vector/text-to-vector` para criar o embedding
 
 
 Para responder uma pergunta, acesse a url:
 
-``` http://localhost:5003/docs ```
+``` http://localhost:5003/docs#/default/generate_response_route_llm_generate_response_post ```
 
-Utilize o método POST para responder a pergunta
+Utilize o método POST `/llm/ask` para responder a pergunta
 
 
 # Informações do Projeto
