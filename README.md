@@ -41,6 +41,35 @@ Repositorio para desenvolvimento case mle hotmart
 - docker compose
 - mínimo de 6GB RAM
 
+## Escolha do modelo LLM
+
+O modelo pode ser escolhido trocando a variável `MODEL` no arquivo `docker-compose.yml` ou  `docker-compose.cpu.yml`, essa variavel esta localizada no serviço `llm_api_service` 
+
+Lista de modelos disponíveis:
+
+| Model              | Parameters | Size  | Download                         |
+| ------------------ | ---------- | ----- | -------------------------------- |
+| Llama 3.2          | 3B         | 2.0GB | `ollama run llama3.2`            |
+| Llama 3.2          | 1B         | 1.3GB | `ollama run llama3.2:1b`         |
+| Llama 3.2 Vision   | 11B        | 7.9GB | `ollama run llama3.2-vision`     |
+| Llama 3.2 Vision   | 90B        | 55GB  | `ollama run llama3.2-vision:90b` |
+| Llama 3.1          | 8B         | 4.7GB | `ollama run llama3.1`            |
+| Llama 3.1          | 70B        | 40GB  | `ollama run llama3.1:70b`        |
+| Llama 3.1          | 405B       | 231GB | `ollama run llama3.1:405b`       |
+| Phi 3 Mini         | 3.8B       | 2.3GB | `ollama run phi3`                |
+| Phi 3 Medium       | 14B        | 7.9GB | `ollama run phi3:medium`         |
+| Gemma 2            | 2B         | 1.6GB | `ollama run gemma2:2b`           |
+| Gemma 2            | 9B         | 5.5GB | `ollama run gemma2`              |
+| Gemma 2            | 27B        | 16GB  | `ollama run gemma2:27b`          |
+| Mistral            | 7B         | 4.1GB | `ollama run mistral`             |
+| Moondream 2        | 1.4B       | 829MB | `ollama run moondream`           |
+| Neural Chat        | 7B         | 4.1GB | `ollama run neural-chat`         |
+| Starling           | 7B         | 4.1GB | `ollama run starling-lm`         |
+| Code Llama         | 7B         | 3.8GB | `ollama run codellama`           |
+| Llama 2 Uncensored | 7B         | 3.8GB | `ollama run llama2-uncensored`   |
+| LLaVA              | 7B         | 4.5GB | `ollama run llava`               |
+| Solar              | 10.7B      | 6.1GB | `ollama run solar`               |
+[Fonte](https://raw.githubusercontent.com/ollama/ollama/refs/heads/main/README.md)
 
 ## Deploy dos containers
 
@@ -64,8 +93,6 @@ Esses processos podem demorar um pouco para rodar, pois os modelos de LLM são g
 
 ## Comandos para criação de embeddings e indexação
 
-O texto sugerido ja foi extraido e salvo no arquivo `utils/out/output.txt`
-
 Para criar os embeddings e indexa-los no vector database, execute o comando make:
 
 ``` make create-index ```
@@ -79,6 +106,52 @@ Temos uma série de perguntas pré definidas para teste das APIs no arquivo `ava
 Para testar as APIs com essas perguntas, execute o comando make:
 
 ``` make ask-script ```
+
+## Outras formas de teste
+
+Os dois principais endpoints das APIs são:
+
+- `/vector/text-to-vector` para criar o embedding de um texto
+
+que recebe um form-data no seguinte formato:
+```json
+{
+  "key": "title",
+  "value": "O que é Hotmart e como funciona? DESCUBRA TUDO!",
+  "type": "text"
+},
+{
+  "key": "description",
+  "value": "testando nosso rag",
+  "type": "text"
+},
+{
+  "key": "user_id",
+  "value": "VAR_TEST_ONLY",
+  "type": "text"
+},
+{
+  "key": "url",
+  "value": "https://hotmart.com/pt-br/blog/como-funciona-hotmart",
+  "type": "text"
+},
+{
+  "key": "file",
+  "type": "file",
+  "src": "path/to/output.txt"
+}
+```
+
+- `/llm/ask` para responder uma pergunta
+
+```json
+{
+  "question": "string",
+  "title_rag": "string"
+}
+```
+
+Obs: O campo `title_rag` deve ser igual ao `title` do texto indexado no vector database. Pois essa é a forma como recuperamos o texto relevante para a resposta.
 
 ### Teste com Postman Collection
 
@@ -110,19 +183,22 @@ Utilize o método POST `/llm/ask` para responder a pergunta
 
 ### Vector Database
 
-Foi escolhida Qdrant por ser escrita em Rust, assim é um banco de dados bastante performatico, seguro contra erros e leve.
+Foi escolhida Qdrant por ser escrita em Rust, assim é um banco de dados bastante performático, seguro contra erros e leve. Integração via `qdrant-client` para Python.
 
 
 ### Backend para as APIs
 
-FastAPI
+FastAPI foi escolhido por ser um dos melhores frameworks para backend em Python, com suporte para operações assíncronas, o que é fundamental para lidar com múltiplas requisições de forma eficiente.
+
 
 ### Ollama
 
-Ollama facilida o deploy de modelos LLM e por isso foi adicionado a esse projeto.
+Ollama facilita o deploy de modelos LLM e por isso foi adicionado a esse projeto.
 
 
 ### Modelo de indexação 
+
+Modelo escolhido: `all-MiniLM-L6-v2`. Vantagens: Leve, rápido, ideal para gerar embeddings de texto com boa qualidade para recuperação semântica e Q&A. Compatível com hardware (RTX 3060 12GB).
 
 
 # Configurações para criação dos embedding
