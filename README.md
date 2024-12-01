@@ -5,11 +5,79 @@ Repositorio para desenvolvimento case mle hotmart
 
 - README.md com informações do projeto e com passo-a-passo de como executá-lo
 
-# Como executar 
+# Comandos para uso e teste do projeto
+
+## Requisitos Linux
+
+- make
+- docker
+- docker compose
+- mínimo de 6GB RAM
+
+
+## Deploy dos containers
 
 Os comandos estão setados para ambiente Linux apenas.
 
-Pelo terminal, navegue até a pasta deste projeto
+Pelo terminal, navegue até a pasta deste projeto.
+
+### Deploy com GPU
+
+Caso tenha GPU e todos os drivers nvidia para uso de GPU pelo docker, execute o seguinte comando make para rodar os containers
+
+``` make up-n-wait ```
+
+### Deploy com CPU
+
+Caso contrario iremos rodar em CPU os modelos para isso devemos
+
+``` make up-n-wait-cpu ```
+
+Esses processos podem demorar um pouco para rodar, pois os modelos de LLM são grandes e precisam ser baixados e indexados.
+
+## Comandos para criação de embeddings e indexação
+
+O texto sugerido ja foi extraido e salvo no arquivo `utils/out/output.txt`
+
+Para criar os embeddings e indexa-los no vector database, execute o comando make:
+
+``` make create-index ```
+
+## Comandos para teste das APIs
+
+### Teste com perguntas pré definidas
+
+Temos uma série de perguntas pré definidas para teste das APIs no arquivo `avaliacao/perguntas.txt`
+
+Para testar as APIs com essas perguntas, execute o comando make:
+
+``` make ask-script ```
+
+### Teste com Postman Collection
+
+Para testar as APIs com o Postman, basta importar a collection `postman/Mle_Hotmart_API.postman_collection.json`
+
+1. Utilize a request `Get Answer` para indexar o texto no vector database, não esqueça de carregar o arquivo `utils/out/output.txt`
+2. Utilize a request `Ask` para testar suas próprias perguntas
+
+
+### Teste utilizando Swagger UI
+
+A FastAPI possui uma interface swagger para teste das APIs, para acessar é necessário rodar o projeto e acessar a url:
+
+Para criar o embedding de um texto, acesse a url:
+
+``` http://localhost:5002/docs ```
+
+Utilize o método POST para criar o embedding
+
+
+Para responder uma pergunta, acesse a url:
+
+``` http://localhost:5003/docs ```
+
+Utilize o método POST para responder a pergunta
+
 
 # Informações do Projeto
 
@@ -36,7 +104,7 @@ Ollama facilida o deploy de modelos LLM e por isso foi adicionado a esse projeto
 # Configurações para recuperação de informação
 
 
-# Testes
+# Benchmarks
 
 ## llama3.2:3b
 
