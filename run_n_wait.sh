@@ -39,9 +39,6 @@ docker-compose up -d --build
 check_service "load_vector_service" "http://localhost:5002/" || exit 1
 check_service "llm_api_service" "http://localhost:5003/" || exit 1
 
-
-#!/bin/bash
-
 # Faz a requisição GET e extrai apenas os nomes dos modelos
 echo "Modelo disponível:"
 echo "-------------------"
