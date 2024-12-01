@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "4a04f911-9f9f-4544-9e9f-2599ac796dd1",
+		"name": "case_ht",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7158294"
+	},
+	"item": [
+		{
+			"name": "save text vec db",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "O que é Hotmart e como funciona? DESCUBRA TUDO!",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "testando nosso rag",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "VAR_TEST_ONLY",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "https://hotmart.com/pt-br/blog/como-funciona-hotmart",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Eduardo Borges/Downloads/output.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.102:5002/vector/text-to-vector",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"102"
+					],
+					"port": "5002",
+					"path": [
+						"vector",
+						"text-to-vector"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ask_llm",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"question\": \"Qual o nome do CEO da Hotmart?\",\r\n    \"title_rag\": \"O que é Hotmart e como funciona? DESCUBRA TUDO!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.1.102:5003/llm/generate-response",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"102"
+					],
+					"port": "5003",
+					"path": [
+						"llm",
+						"generate-response"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
