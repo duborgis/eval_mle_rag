@@ -465,3 +465,13 @@ P: Qual é a política de cobrança da Hotmart para uso da plataforma?<br>
 R:  A Hotmart não exige nenhuma cobrança para o uso da plataforma gratuito. A única cobrança feita é uma comissão de 9,9% por cada venda realizada.
 
 
+# Proximos passos
+
+-   [ ] Adicionar mais perguntas pré definidas para avaliação
+-   [ ] Adicionar mais modelos de LLM
+-   [ ] Adicionar mais modelos de embeddings
+-   [ ] Testar a performance em GPU
+-   [ ] Testar a parametrização da busca por similaridade
+-   [ ] Testar a parametrização do Text Splitter ao gerar os embeddings
+-   [ ] Testar a possibilidade de gerar mais texto para indexação (Augmentation Techniques)
+-   [ ] Melhorar a interface de teste das APIs
