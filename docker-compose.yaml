@@ -1,20 +1,67 @@
-
-
 services:
-  vector_db:
-    image: milvusdb/milvus:latest
-    container_name: milvus
+  qdrant:
+    image: qdrant/qdrant
+    container_name: qdrant
+    networks:
+      - mle_network
     ports:
-      - "19530:19530"
+      - "6333:6333"
+      - "6334:6334"
+    environment:
+      - ENV_VARIABLE=value
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    networks:
+      - mle_network
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   load_vector_service:
     build: ./load_vector_service
     container_name: load_vector_service
+    networks:
+      - mle_network
+    depends_on:
+      - qdrant
     ports:
-      - "8000:8000"
+      - "5002:5002"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   llm_api_service:
     build: ./llm_api_service
     container_name: llm_api_service
+    networks:
+      - mle_network
+    depends_on:
+      - ollama
+      - load_vector_service
     ports:
-      - "8001:8000"
+      - "5003:5003"
+
+volumes:
+  ollama:
+
+networks:
+  mle_network:
+    name: mle_network
+    driver: bridge
+  default:
+    external: false
+    name: mle_network

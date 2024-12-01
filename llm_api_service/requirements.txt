@@ -1,0 +1,7 @@
+qdrant-client>=1.2.0
+httpx>=0.25.3
+fastapi>=0.110.0
+uvicorn>=0.32.0
+ollama
+requests
+jwt
