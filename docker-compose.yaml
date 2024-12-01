@@ -1,5 +1,3 @@
-
-
 services:
   qdrant:
     image: qdrant/qdrant
@@ -57,12 +55,13 @@ services:
     ports:
       - "5003:5003"
 
-
-
 volumes:
-  ollama:      
+  ollama:
 
 networks:
+  mle_network:
+    name: mle_network
+    driver: bridge
   default:
-    external:
-      name: mle_network 
+    external: false
+    name: mle_network

@@ -8,7 +8,7 @@ import os
 import uuid
 from pynvml import nvmlInit, nvmlDeviceGetCount, NVMLError
 import hashlib
-qdrant_client = QdrantClient("localhost", port=6333)
+qdrant_client = QdrantClient("qdrant", port=6333)
 
 def check_gpu_available():
     try:
