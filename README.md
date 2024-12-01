@@ -1,6 +1,33 @@
 # avaliaca_mle_hotmart
 Repositorio para desenvolvimento case mle hotmart
 
+## Índice
+
+- [TODO](#todo)
+- [Comandos para uso e teste do projeto](#comandos-para-uso-e-teste-do-projeto)
+  - [Requisitos Linux](#requisitos-linux)
+  - [Deploy dos containers](#deploy-dos-containers)
+    - [Deploy com GPU](#deploy-com-gpu)
+    - [Deploy com CPU](#deploy-com-cpu)
+  - [Comandos para criação de embeddings e indexação](#comandos-para-criação-de-embeddings-e-indexação)
+  - [Comandos para teste das APIs](#comandos-para-teste-das-apis)
+    - [Teste com perguntas pré definidas](#teste-com-perguntas-pré-definidas)
+    - [Teste com Postman Collection](#teste-com-postman-collection)
+    - [Teste utilizando Swagger UI](#teste-utilizando-swagger-ui)
+- [Informações do Projeto](#informações-do-projeto)
+  - [Vector Database](#vector-database)
+  - [Backend para as APIs](#backend-para-as-apis)
+  - [Ollama](#ollama)
+  - [Modelo de indexação](#modelo-de-indexação)
+- [Configurações para criação dos embedding](#configurações-para-criação-dos-embedding)
+- [Configurações para recuperação de informação](#configurações-para-recuperação-de-informação)
+- [Benchmarks](#benchmarks)
+  - [llama3.2:3b](#llama32-3b)
+  - [llama3.2:1b](#llama32-1b)
+  - [moondream](#moondream)
+  - [mistral](#mistral)
+- [Próximos passos](#próximos-passos)
+
 # TODO
 
 - README.md com informações do projeto e com passo-a-passo de como executá-lo
