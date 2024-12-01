@@ -5,6 +5,31 @@ Repositorio para desenvolvimento case mle hotmart
 
 - README.md com informações do projeto e com passo-a-passo de como executá-lo
 
+# Como executar 
+
+Os comandos estão setados para ambiente Linux apenas.
+
+Pelo terminal, navegue até a pasta deste projeto
+
+# Informações do Projeto
+
+### Vector Database
+
+Foi escolhida Qdrant por ser escrita em Rust, assim é um banco de dados bastante performatico, seguro contra erros e leve.
+
+
+### Backend para as APIs
+
+FastAPI
+
+### Ollama
+
+Ollama facilida o deploy de modelos LLM e por isso foi adicionado a esse projeto.
+
+
+### Modelo de indexação 
+
+
 # Configurações para criação dos embedding
 
 
@@ -16,7 +41,7 @@ Repositorio para desenvolvimento case mle hotmart
 ## llama3.2:3b
 
 Modelo-embedding: all-MiniLM-L6-v2<br>
-Modelo-LLM: llama3.2:3b
+Modelo-LLM: llama3.2:3b (2.0GB)
 
 P: Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil? <br>
 R: A taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil é de 9,9% do valor do produto.
@@ -107,7 +132,7 @@ R: A política de cobrança da Hotmart é que os usuários pagam apenas 9,9% do 
 ## llama3.2:1b
 
 Modelo-embedding: all-MiniLM-L6-v2<br>
-Modelo-LLM: llama3.2:1b
+Modelo-LLM: llama3.2:1b (1.3GB)
 
 
 P: Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil?<br>
@@ -192,5 +217,183 @@ R: O recurso "Compra com 1 Clique" (ou também conhecido como "One-Click Buy") n
 P: Qual é a política de cobrança da Hotmart para uso da plataforma?<br>
 R: Sim, a resposta é:
 A Hotmart cobra 9,9% do valor da venda realizada como única opção de cobrança, desde que o usuário não faça uma venda.
+
+
+## moondream
+
+Modelo-embedding: all-MiniLM-L6-v2<br>
+Modelo-LLM: moondream (829MB)
+
+P: Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil?<br>
+R: 
+ 9.9%
+
+
+
+P: Em que ano a Hotmart foi fundada e quem são seus fundadores?<br>
+R: 
+ 2014
+
+
+
+P: Quais são os três principais papéis envolvidos no processo de venda online da Hotmart?<br>
+R: 
+ 1. E o melhor:tudo isso em um só lugar e com total integração com a Hotmart!  Quais são as formas de pagamento e como funciona o sistema de comissões na Hotmart? Como você pôde ver até aqui, a Hotmart é diferente, pois oferece tudo para que a venda seja feita
+
+
+
+P: Quantos países a Hotmart possui escritórios atualmente?<br>
+R: 
+
+
+
+P: O que é o Hotmart Club e quais são suas principais características?<br>
+R: 
+The Hotmart Club is a club that sells products to its members. It has been described as a "hotmart" with many features, including the ability to buy one-click and to buy from multiple vendors at once. The club also offers a variety of products for sale, which can be purchased by its members through the club's sales channels. Additionally, it provides services such as customer support and product recommendations based on the preferences of its members.
+
+
+
+P: Quais são as formas de pagamento aceitas pela Hotmart?<br>
+R: 
+ 1. E o melhor:tudo isso em um só lugar e com total integração com a Hotmart!  Quais são as formas de pagamento e como funciona o sistema de comissões na Hotmart? Como vê pode ser encontrada no contexto, diga 
+Não tenho informações suficientes para responder.
+
+
+
+P: Como funciona o sistema de comissões para Afiliados na plataforma?<br>
+R: 
+
+Nossos Produtores e Afiliados, entregando funcionalidades e conteúdos que os ajudem a realizar vendas e ter uma renda fazendo algo que eles realmente gostem.
+
+
+
+P: O que é o HotLeads e para que serve?<br>
+R: 
+HotLeadsOHotLeads
+
+
+
+P: 9. Quantos produtos cadastrados e usuários a Hotmart possui?<br>
+R: 
+ 9
+
+
+
+P: Como funciona a emissão de notas fiscais na plataforma?<br>
+R: 
+
+Não tenho informações suficientes para responder.
+
+
+
+P: O que é o Club Sales e qual sua principal função?<br>
+R: 
+The primary function of the Club Sales is to sell products directly to customers. It allows customers to browse and purchase items from a variety of vendors, including Hotmart Club. The club sales model provides an opportunity for customers to shop online or in-store without having to navigate through multiple pages on a website. This can be particularly beneficial for busy shoppers who want to save time by purchasing products directly from the source. Additionally, the club sales model allows businesses to reach a wider audience and increase their customer base, as it enables them to sell their products through various channels such as online platforms or physical stores.
+
+
+
+P: Quais são os tipos de produtos que podem ser comercializados na Hotmart?<br>
+R: 
+There are several types of products that can be considered as commercialized at a market, such as food items and household goods. In the context of this question, it is not clear whether the product being sold is food or household goods. However, given the presence of the word "hotmart" in the question, it is likely that the product being sold could be either food or household goods.
+
+
+
+P: Qual é a sede global da Hotmart?<br>
+R: 
+
+
+
+
+P: Como funciona o recurso de Compra com 1 Clique?<br>
+R: 
+Compra com 1 clique.
+
+
+
+P: Qual é a política de cobrança da Hotmart para uso da plataforma?<br>
+R: 
+Não! A hotmart é uma plataforma gratuita, e nossa cobra por venda seu precisa preciar um sistema complexo para comunicar sua botânica.
+
+
+
+## mistral
+
+Modelo-embedding: all-MiniLM-L6-v2<br>
+Modelo-LLM: mistral (4.1GB)
+
+P: Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil?<br>
+R: 9% do valor do produto.
+
+
+
+P: Em que ano a Hotmart foi fundada e quem são seus fundadores?<br>
+R:  A Hotmart foi fundada em 2011. Seus fundadores são João Pedro Resende e outros associados.
+
+
+
+P: Quais são os três principais papéis envolvidos no processo de venda online da Hotmart?<br>
+R: 1. O criador de conteúdo, que cria e oferece o produto digital (cursos online, por exemplo) na plataforma Hotmart.
+2. Os clientes, que acompanham o funil de vendas e decidem fazer compras dos produtos oferecidos pela Hotmart.
+3. A Hotmart, que hospeda os cursos online e processa todos os pagamentos online, fornece as soluções necessárias para ajudar a escalar o negócio digital e emite as notas fiscais corretamente.
+
+
+
+P: Quantos países a Hotmart possui escritórios atualmente?<br>
+R:  Não tenho informações suficientes para responder. A descrição do contexto não fornece detalhes sobre quantos países a Hotmart possui escritórios.
+
+
+
+P: O que é o Hotmart Club e quais são suas principais características?<br>
+R:  O Hotmart Club é uma área de membros gratuita e ilimitada, desenvolvida pela plataforma de vendas Hotmart. Suas principais características incluem oferecer segurança para os dados de compra, aumentar as vendas automaticamente e facilitar a entrega de conteúdo com o recurso One-Click Buy. Ele foi desenvolvido especificamente para evitar que o conteúdo seja replicado para pessoas que não adquiriram o curso.
+
+
+
+P: Quais são as formas de pagamento aceitas pela Hotmart?<br>
+R:  A Hotmart aceita diversos métodos de pagamentos, tais como cartão de crédito, cartão de débito, boleto bancário, transferência bancária, Pix e outros meios de pagamento digital.
+
+
+
+P: Como funciona o sistema de comissões para Afiliados na plataforma?<br>
+R:  Na plataforma Hotmart, os Afiliados recebem uma comissão por cada venda realizada a partir de seus links. O percentual da comissão é definido pela empresa e pode variar de acordo com o tipo de produto ou outras condições específicas. Os Afiliados podem visualizar suas vendas, estatísticas e recebimentos em uma área exclusiva do sistema, onde também é possível gerenciar as suas promoções e links de afiliação.
+
+
+
+P: O que é o HotLeads e para que serve?<br>
+R:  O HotLeads é uma ferramenta que permite vincular leads aos afiliados de forma segura, garantindo que eles recebam suas comissões corretamente. Funciona em conjunto com a plataforma Hotmart e oferece soluções para rastrear e gerenciar esses leads.
+
+
+
+P: 9. Quantos produtos cadastrados e usuários a Hotmart possui?<br>
+R:  Não tenho informações suficientes para responder. A quantidade de produtos cadastrados e usuários na Hotmart não é fornecida no contexto fornecido.
+
+
+
+P: Como funciona a emissão de notas fiscais na plataforma?<br>
+R:  A emissão de notas fiscais na plataforma é automática. Uma empresa dentro da Hotmart Company, chamada eNotas, realiza esse serviço de integração. Quando uma venda digital ocorre, a eNotas automaticamente emite as notas fiscais tanto para o comprador quanto para o produtor (ou afiliado), funcionando como um fornecedor.
+
+
+
+P: O que é o Club Sales e qual sua principal função?<br>
+R:  O Club Sales é uma ferramenta no Hotmart Club. Sua principal função é impulsionar as conversões (vendas) aumentando a facilidade de compra dos clientes, muitos dos quais conhecem como One-Click Buy.
+
+
+
+P: Quais são os tipos de produtos que podem ser comercializados na Hotmart?<br>
+R:  Na Hotmart, é possível comercializar produtos digitais e físicos.
+
+
+
+P: Qual é a sede global da Hotmart?<br>
+R:  Não tenho informações suficientes para responder. A localização da sede global de Hotmart não foi mencionada no contexto fornecido.
+
+
+
+P: Como funciona o recurso de Compra com 1 Clique?<br>
+R:  O recurso "Compra com 1 clique" (ou "One-Click Buy") facilita o pagamento dos clientes, reduzindo o tempo e dificuldades no cadastro de informações pessoais. Quando um usuário clica em uma opção de compra, os detalhes de pagamento armazenados anteriormente serão automaticamente preenchidos, permitindo que a transação seja concluída com apenas um único clique. Se o limite do cartão for insuficiente para realizar a compra, existem recuperadores de venda que podem ajudar transformando a compra em uma recurrente.
+
+
+
+P: Qual é a política de cobrança da Hotmart para uso da plataforma?<br>
+R:  A Hotmart não exige nenhuma cobrança para o uso da plataforma gratuito. A única cobrança feita é uma comissão de 9,9% por cada venda realizada.
 
 
