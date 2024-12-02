@@ -44,6 +44,7 @@ Garantir que o docker e o make estão instalados.
 ## Requisitos mínimos:
 
 Para o modelo default `llama3.2:3b` e para embeddings `all-MiniLM-L6-v2`:
+
 ![alt text](docs/assets/image.png)
 
 ## Requisitos mínimos para execução em CPU:
@@ -54,6 +55,7 @@ Para o modelo default `llama3.2:3b` e para embeddings `all-MiniLM-L6-v2`:
 - x86_64 (não foi testado em ARM)
 
 Instancia de CPU (EC2) foi escolhida uma instancia melhor que o minimo, pois a inferencia em CPU é mais lenta e alguns cores a mais podem ajudar:
+
 ![alt text](docs/assets/image-2.png)
 
 CPU:
@@ -68,6 +70,7 @@ CPU:
 - x86_64 (não foi testado em ARM)
 
 Instancia de GPU (Sagemaker):
+
 ![alt text](docs/assets/image-1.png)
 
 GPU:
