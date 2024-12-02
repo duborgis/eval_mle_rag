@@ -2,20 +2,16 @@
 import hashlib
 import requests
 import httpx
-from ..configs import VECTOR_SERVICE_URL
-from ollama import chat, pull
+from ..configs import VECTOR_SERVICE_URL, MODEL_NAME
 from ollama import ChatResponse
-import os
 from ollama import Client
 
 client = Client(
   host='http://ollama:11434',
 )
 
-
-
 def load_model_on_init():
-    client.pull(model='llama3.2:1b')
+    client.pull(model=MODEL_NAME)
 
 load_model_on_init()
 
@@ -60,17 +56,21 @@ async def get_vector_search_results(question: str, collection_name: str) -> str:
 
 
 async def generate_response(question: str, collection_name: str) -> str:
-    search_results = await get_vector_search_results(question, collection_name)
-    prompt = create_prompt(question, search_results)
-    print(prompt)
-    response: ChatResponse = client.chat(model='llama3.2:1b', messages=[
-    {
-            "role": "user",
-            "content": prompt,
-        },
-    ])
-    print(response.message.content)
-    return response.message.content
+    try:
+        search_results = await get_vector_search_results(question, collection_name)
+        prompt = create_prompt(question, search_results)
+        print(prompt)
+        response: ChatResponse = client.chat(model=MODEL_NAME, messages=[
+        {
+                "role": "user",
+                "content": prompt,
+            },
+        ])
+        return {"response": response.message.content, "rag_search_results": search_results}
+    except Exception as e:
+        print(f"Erro ao gerar resposta: {str(e)}")
+        raise Exception("Não tenho informações suficientes para responder.")
+    
 
 
 

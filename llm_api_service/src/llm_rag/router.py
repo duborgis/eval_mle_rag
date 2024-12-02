@@ -23,6 +23,6 @@ async def health_route():
 @llm_router.post("/generate-response")
 @generic_error_handler
 async def generate_response_route(data: LLMData):
-    return await generate_response(data.question, data.title_rag)
-
+    response = await generate_response(data.question, data.title_rag)
+    return JSONResponse(content=response, status_code=status.HTTP_200_OK)
 

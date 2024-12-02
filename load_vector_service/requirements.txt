@@ -8,3 +8,4 @@ uvicorn>=0.32.0
 requests
 jwt
 python-multipart
+nltk

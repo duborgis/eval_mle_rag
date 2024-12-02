@@ -21,13 +21,6 @@ services:
       - "11434:11434"
     volumes:
       - ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
 
   load_vector_service:
     build: ./load_vector_service
@@ -40,13 +33,7 @@ services:
       - "5002:5002"
     volumes:
       - huggingface_cache:/root/.cache/huggingface 
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+
 
   llm_api_service:
     build: ./llm_api_service
@@ -59,7 +46,7 @@ services:
     ports:
       - "5003:5003"
     environment:
-      - MODEL_NAME=mistral
+      - MODEL_NAME=llama3.2:3b
 
 volumes:
   ollama:

@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .configs import VERSION
 from .ingest_vec.router import vector_router
-from .utils import config_logging, AuthenticationMiddleware
+from .utils import config_logging
 
 config_logging()
 
