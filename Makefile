@@ -36,11 +36,13 @@ serve-llm:
 # comandos que serão utilizados pelo avaliador
 
 up-n-wait:
+	@make down
 	@chmod +x ./run_n_wait.sh
 	@./run_n_wait.sh gpu
 	@nvidia-smi
 
 up-n-wait-cpu:
+	@make down
 	@chmod +x ./run_n_wait.sh
 	@./run_n_wait.sh cpu
 
