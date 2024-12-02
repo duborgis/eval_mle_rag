@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .configs import VERSION
 from .ingest_vec.router import vector_router
 from .utils import config_logging
+from .extract_url.router import extract_url_router
 
 config_logging()
 
@@ -26,4 +27,5 @@ def health_check():
     )
 
 app.include_router(vector_router, prefix='/vector')
+app.include_router(extract_url_router, prefix='/extract')
 

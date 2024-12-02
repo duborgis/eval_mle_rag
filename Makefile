@@ -36,9 +36,9 @@ serve-llm:
 # comandos que serão utilizados pelo avaliador
 
 up-n-wait:
-	@nvidia-smi
 	@chmod +x ./run_n_wait.sh
 	@./run_n_wait.sh gpu
+	@nvidia-smi
 
 up-n-wait-cpu:
 	@chmod +x ./run_n_wait.sh
@@ -52,6 +52,22 @@ create-vector:
 ask-script:
 	@chmod +x ./avaliacao/ask_script.sh
 	@cd ./avaliacao && ./ask_script.sh
+
+
+vai-test:
+	@make up-n-wait
+	@make create-vector
+	@make ask-script
+
+vai-test-cpu:
+	@make up-n-wait-cpu
+	@make create-vector
+	@make ask-script
+
+
+extract-url:
+	@curl -X POST http://localhost:5002/extract/extract-url -H "Content-Type: application/json" -d '{"url": "https://hotmart.com/pt-br/blog/como-funciona-hotmart"}'
+
 
 down:
 	@docker compose down

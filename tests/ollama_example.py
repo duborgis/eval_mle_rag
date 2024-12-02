@@ -10,5 +10,4 @@ response: ChatResponse = chat(model='llama3.2:1b', messages=[
     },
 ])
 print(response['message']['content'])
-# or access fields directly from the response object
 print(response.message.content)

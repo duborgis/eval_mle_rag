@@ -1,17 +1,16 @@
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from typing import List, Dict, Any
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 import uuid
 from pynvml import nvmlInit, nvmlDeviceGetCount, NVMLError
 import hashlib
 import re
+from nltk.corpus import stopwords
 import nltk
 
 nltk.download('stopwords')
 
-from nltk.corpus import stopwords
 
 
 qdrant_client = QdrantClient("qdrant", port=6333)

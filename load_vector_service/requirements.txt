@@ -9,3 +9,4 @@ requests
 jwt
 python-multipart
 nltk
+bs4

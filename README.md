@@ -1,57 +1,83 @@
-# avaliaca_mle_hotmart
-Repositório para desenvolvimento do case MLE Hotmart
 
-Teste rápido:
+# Índice
 
-GPU:
-``` make up-n-wait && make create-vector && make ask-script ```
-
-CPU:
-``` make up-n-wait-cpu && make create-vector && make ask-script ```
-
-## Índice
-
-- [TODO](#todo)
+- [Guia para teste rápido](#guia-para-teste-rápido)
+- [Requisitos mínimos](#requisitos-mínimos)
+  - [Requisitos mínimos para CPU](#requisitos-mínimos-para-cpu)
+  - [Requisitos mínimos para GPU](#requisitos-mínimos-para-gpu)
 - [Comandos para uso e teste do projeto](#comandos-para-uso-e-teste-do-projeto)
-  - [Requisitos Linux](#requisitos-linux)
   - [Escolha do modelo LLM](#escolha-do-modelo-llm)
-  - [Deploy dos containers](#deploy-dos-containers)
+  - [Deploy dos containers e testes utilizando Makefile](#deploy-dos-containers-e-testes-utilizando-makefile)
     - [Deploy com GPU](#deploy-com-gpu)
     - [Deploy com CPU](#deploy-com-cpu)
   - [Comandos para criação de embeddings e indexação](#comandos-para-criação-de-embeddings-e-indexação)
-  - [Comandos para teste das APIs](#comandos-para-teste-das-apis)
-    - [Teste com perguntas pré-definidas](#teste-com-perguntas-pré-definidas)
-    - [Outras formas de teste](#outras-formas-de-teste)
-    - [Teste com Postman Collection](#teste-com-postman-collection)
-    - [Teste utilizando Swagger UI](#teste-utilizando-swagger-ui)
+  - [Teste com perguntas pré definidas](#teste-com-perguntas-pré-definidas)
+  - [Comandos para teste de extração de url](#comandos-para-teste-de-extração-de-url)
+- [Outras formas de teste](#outras-formas-de-teste)
+  - [Teste com Postman Collection](#teste-com-postman-collection)
+  - [Teste utilizando Swagger UI](#teste-utilizando-swagger-ui)
 - [Informações do Projeto](#informações-do-projeto)
   - [Stack e Tecnologias](#stack-e-tecnologias)
-  - [Vector Database](#vector-database)
-  - [Backend para as APIs](#backend-para-as-apis)
-  - [Ollama](#ollama)
-  - [Modelo de indexação](#modelo-de-indexação)
+    - [Vector Database](#vector-database)
+    - [Backend para as APIs](#backend-para-as-apis)
+    - [Ollama](#ollama)
+    - [Modelo de indexação](#modelo-de-indexação)
 - [Pipeline RAG](#pipeline-rag)
   - [Configurações para criação dos embedding](#configurações-para-criação-dos-embedding)
+    - [Divisão do texto em chunck](#divisão-do-texto-em-chunck)
+    - [Criação da collection no vector database](#criação-da-collection-no-vector-database)
+    - [Criação dos pontos (embeddings) no vector database](#criação-dos-pontos-embeddings-no-vector-database)
   - [Configurações para recuperação de informação](#configurações-para-recuperação-de-informação)
 - [Benchmarks](#benchmarks)
-  - [llama3.2:3b](#llama32-3b)
-  - [llama3.2:1b](#llama32-1b)
+  - [llama3.2:3b](#llama32:3b)
+  - [llama3.2:1b](#llama32:1b)
   - [moondream](#moondream)
   - [mistral](#mistral)
 - [Próximos passos](#próximos-passos)
 
-# TODO
+# Guia para teste rápido:
 
-- README.md com informações do projeto e com passo-a-passo de como executá-lo
+Garantir que o docker e o make estão instalados.
+
+``` make -v && echo -e "\n" && docker -v ```
+
+## Requisitos mínimos:
+
+Para o modelo default `llama3.2:3b` e para embeddings `all-MiniLM-L6-v2`:
+![alt text](image.png)
+
+## Requisitos mínimos para CPU:
+
+- 6GB RAM
+- 6 cores
+- Linux Ubuntu
+- x86_64 (não foi testado em ARM)
+
+Instancia de CPU (EC2) foi escolhida uma instancia melhor que o minimo, pois a inferencia em CPU é mais lenta e alguns cores a mais podem ajudar:
+![alt text](image-2.png)
+
+CPU:
+``` make up-n-wait-cpu && make create-vector && make ask-script ```
+
+## Requisitos mínimos para GPU:
+
+- 6GB VRAM (Nvidia)
+- 4GB RAM
+- 6 cores
+- Linux Ubuntu
+- x86_64 (não foi testado em ARM)
+
+Instancia de GPU (Sagemaker):
+![alt text](image-1.png)
+
+GPU:
+``` make up-n-wait && make create-vector && make ask-script ```
+
+
+
 
 # Comandos para uso e teste do projeto
 
-## Requisitos Linux
-
-- make
-- docker
-- docker compose
-- mínimo de 6GB RAM
 
 ## Escolha do modelo LLM
 
@@ -59,11 +85,11 @@ O modelo pode ser escolhido trocando a variável `MODEL` no arquivo `docker-comp
 
 Model default: `llama3.2:3b`
 
-Lista de modelos disponíveis:
+Lista de modelos disponíveis no ollama:
 
 | Model              | Parameters | Size  | MODEL_NAME            |
 | ------------------ | ---------- | ----- | --------------------- |
-| Llama 3.2          | 3B         | 2.0GB | `llama3.2`            |
+| Llama 3.2          | 3B         | 2.0GB | `llama3.2:3b`         |
 | Llama 3.2          | 1B         | 1.3GB | `llama3.2:1b`         |
 | Llama 3.2 Vision   | 11B        | 7.9GB | `llama3.2-vision`     |
 | Llama 3.2 Vision   | 90B        | 55GB  | `llama3.2-vision:90b` |
@@ -85,7 +111,7 @@ Lista de modelos disponíveis:
 | Solar              | 10.7B      | 6.1GB | `solar`               |
 [Fonte](https://raw.githubusercontent.com/ollama/ollama/refs/heads/main/README.md)
 
-## Deploy dos containers
+## Deploy dos containers e testes utilizando Makefile
 
 Os comandos utilizam script shell e somente funcionam para ambiente Linux.
 
@@ -105,13 +131,12 @@ Caso contrario iremos rodar em CPU os modelos para isso devemos
 
 Esses processos podem demorar um pouco para rodar, pois os modelos de LLM são grandes e precisam ser baixados e indexados.
 
-## Comandos para criação de embeddings e indexação
+### Comandos para criação de embeddings e indexação
 
 Para criar os embeddings e indexa-los no vector database, execute o comando make:
 
 ``` make create-index ```
 
-## Comandos para teste das APIs
 
 ### Teste com perguntas pré definidas
 
@@ -121,49 +146,44 @@ Para testar as APIs com essas perguntas, execute o comando make:
 
 ``` make ask-script ```
 
+### Comandos para teste de extração de url
+
+Para testar a extração de url, execute o comando make:
+
+``` make extract-url ```
+
 ## Outras formas de teste
 
-Os dois principais endpoints das APIs são:
+Os principais endpoints das APIs são:
 
-- `/vector/text-to-vector` para criar o embedding de um texto
+### Vector Service (localhost:5002)
 
-que recebe um form-data no seguinte formato:
-```json
-{
-  "key": "title",
-  "value": "O que é Hotmart e como funciona? DESCUBRA TUDO!",
-  "type": "text"
-},
-{
-  "key": "description",
-  "value": "testando nosso rag",
-  "type": "text"
-},
-{
-  "key": "user_id",
-  "value": "VAR_TEST_ONLY",
-  "type": "text"
-},
-{
-  "key": "url",
-  "value": "https://hotmart.com/pt-br/blog/como-funciona-hotmart",
-  "type": "text"
-},
-{
-  "key": "file",
-  "type": "file",
-  "src": "path/to/output.txt"
-}
-```
+`/extract/extract-url` para extrair o conteúdo de uma url. Payload type application/json:
+| Campo       | Tipo   | Descrição                                                                 |
+|-------------|--------|---------------------------------------------------------------------------|
+| `url`       | string | A url que será extraida.                                                  |
 
-- `/llm/ask` para fazer uma pergunta ao LLM com recuperação de informação do vector database. Para que a resposta seja mais assertiva, é necessário que o campo `title_rag` seja igual ao `title` do texto indexado no vector database.
 
-```json
-{
-  "question": "string",
-  "title_rag": "string"
-}
-```
+`/vector/text-to-vector` para criar o embedding de um texto. Payload type multipart/form-data:
+| Campo       | Tipo   | Descrição                                                                 |
+|-------------|--------|---------------------------------------------------------------------------|
+| `title`     | text   | O título do texto que será processado.                                    |
+| `description` | text | Uma breve descrição ou contexto do texto.                                 |
+| `user_id`   | text   | Identificador do usuário, usado para fins de teste.                       |
+| `url`       | text   | URL do texto ou recurso associado.                                        |
+| `file`      | file   | Caminho para o arquivo que contém o texto a ser processado.               |
+
+### LLM Service (localhost:5003)
+
+ `/llm/ask` para fazer uma pergunta ao LLM com recuperação de informação do vector database. Payload type application/json
+ 
+ OBS: Para que a resposta seja assertiva, é necessário que o campo `title_rag` seja igual ao `title` do texto indexado no vector database. 
+
+| Campo       | Tipo   | Descrição                                                                 |
+|-------------|--------|---------------------------------------------------------------------------|
+| `question`  | string | A pergunta que será feita ao modelo LLM.                                  |
+| `title_rag` | string | O título do texto indexado no vector database, deve corresponder ao título original. |
+
 
 Obs: O campo `title_rag` deve ser igual ao `title` do texto indexado no vector database. Pois essa é a forma como recuperamos o texto relevante para a resposta.
 
@@ -172,12 +192,19 @@ Obs: O campo `title_rag` deve ser igual ao `title` do texto indexado no vector d
 Para testar as APIs com o Postman, basta importar a collection `postman/Mle_Hotmart_API.postman_collection.json`
 
 1. Utilize a request `save text vec db` para indexar o texto no vector database, não esqueça de carregar o arquivo `utils/out/output.txt`
+
 2. Utilize a request `ask llm` para testar suas próprias perguntas
+
+3. Utilize a request `extract url` para extrair o conteúdo de uma url e indexar no vector database
 
 
 ### Teste utilizando Swagger UI
 
 A FastAPI possui uma interface swagger para teste das APIs, para acessar é necessário rodar o projeto e acessar a url:
+
+Para extrair o conteúdo de uma url, acesse a url:
+
+``` http://localhost:5002/docs#/default/extract_url_extract_extract_url_post ```
 
 Para criar o embedding de um texto, acesse a url:
 

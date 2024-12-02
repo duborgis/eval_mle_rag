@@ -9,8 +9,6 @@ services:
       - "6334:6334"
     volumes:
       - qdrant:/qdrant/storage
-    environment:
-      - ENV_VARIABLE=value
 
   ollama:
     image: ollama/ollama
@@ -59,7 +57,7 @@ services:
     ports:
       - "5003:5003"
     environment:
-      - MODEL_NAME=mistral
+      - MODEL_NAME=llama3.2:3b
 
 volumes:
   ollama:
@@ -70,6 +68,4 @@ networks:
   mle_network:
     name: mle_network
     driver: bridge
-  default:
     external: false
-    name: mle_network
