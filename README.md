@@ -46,7 +46,7 @@ Garantir que o docker e o make estão instalados.
 Para o modelo default `llama3.2:3b` e para embeddings `all-MiniLM-L6-v2`:
 ![alt text](docs/assets/image.png)
 
-## Requisitos mínimos para CPU:
+## Requisitos mínimos para execução em CPU:
 
 - 6GB RAM
 - 6 cores
@@ -59,7 +59,7 @@ Instancia de CPU (EC2) foi escolhida uma instancia melhor que o minimo, pois a i
 CPU:
 ``` make up-n-wait-cpu && make create-vector && make ask-script ```
 
-## Requisitos mínimos para GPU:
+## Requisitos mínimos para execução em GPU:
 
 - 6GB VRAM (Nvidia)
 - 4GB RAM

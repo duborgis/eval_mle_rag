@@ -9,8 +9,6 @@ services:
       - "6334:6334"
     volumes:
       - qdrant:/qdrant/storage
-    environment:
-      - ENV_VARIABLE=value
 
   ollama:
     image: ollama/ollama
@@ -34,7 +32,6 @@ services:
     volumes:
       - huggingface_cache:/root/.cache/huggingface 
 
-
   llm_api_service:
     build: ./llm_api_service
     container_name: llm_api_service
@@ -57,6 +54,4 @@ networks:
   mle_network:
     name: mle_network
     driver: bridge
-  default:
     external: false
-    name: mle_network
