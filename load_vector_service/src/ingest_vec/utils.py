@@ -6,6 +6,14 @@ from langchain.text_splitter import CharacterTextSplitter
 import uuid
 from pynvml import nvmlInit, nvmlDeviceGetCount, NVMLError
 import hashlib
+import re
+import nltk
+
+nltk.download('stopwords')
+
+from nltk.corpus import stopwords
+
+
 qdrant_client = QdrantClient("qdrant", port=6333)
 
 def check_gpu_available():
@@ -54,7 +62,6 @@ def get_chunks(text: str):
         
         for chunk in chunks:
             if len(chunk) > max_chunk_size:
-                # Split chunks grandes usando pontuação
                 sub_splitter = CharacterTextSplitter(
                     separator=".",
                     chunk_size=200,
@@ -66,11 +73,9 @@ def get_chunks(text: str):
             else:
                 final_chunks.append(chunk)
         
-        # Limpa e normaliza os chunks
         cleaned_chunks = [
-            chunk.strip()
+            normalize_chunk(chunk)
             for chunk in final_chunks
-            if len(chunk.strip()) > 50  # Remove chunks muito pequenos
         ]
         
         return cleaned_chunks
@@ -79,19 +84,21 @@ def get_chunks(text: str):
         return []
 
 
-def normalize_name_collection(collection_name: str):
-    # cria um hash do nome da collection
-    return hashlib.md5(collection_name.encode()).hexdigest()
+def normalize_chunk(text: str):
+    text = text.strip()
 
+    text = re.sub(r'[^\w\s]', '', text)
 
-def check_collection_exists(collection_name: str):
-    collection_name = normalize_name_collection(collection_name)
-    collections = qdrant_client.get_collections().collections
-    collection_exists = any(col.name == collection_name for col in collections)
-    return collection_exists
+    text = text.lower()
 
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
 
-def vectorize_ask_function(question: str, collection_name: str):
+    stop_words = set(stopwords.words('portuguese'))
+    text = ' '.join([word for word in text.split() if word not in stop_words])
+
+    return text
+
+def retrieve_similar_data(question: str, collection_name: str):
     collection_name = normalize_name_collection(collection_name)
     embedding = embeddings_model.embed_query(question)
     search_result = qdrant_client.search(
@@ -111,7 +118,6 @@ def vectorize_ask_function(question: str, collection_name: str):
 
 def create_and_store_embeddings(
     texts: str,
-    metadata_list: List[Dict[str, Any]],
     collection_name: str,
     batch_size: int = 50
 ) -> None:
@@ -119,19 +125,19 @@ def create_and_store_embeddings(
     collections = qdrant_client.get_collections().collections
     collection_exists = any(col.name == collection_name for col in collections)
     
-    if not collection_exists:
-        qdrant_client.create_collection(
-            collection_name=collection_name,
-            vectors_config=models.VectorParams(
-                size=384,  # Dimensão do modelo all-MiniLM-L6-v2
-                distance=models.Distance.COSINE
-            )
-        )
-    else:
+    if collection_exists:
         print(f"Collection {collection_name} already exists")
         raise Exception(f"Collection {collection_name} already exists")
-    
-    chunks = get_chunks(texts)
+
+    qdrant_client.create_collection(
+        collection_name=collection_name,
+        vectors_config=models.VectorParams(
+            size=384,  # Dimensão do modelo all-MiniLM-L6-v2
+            distance=models.Distance.COSINE
+        )
+    )
+
+    chunks = get_chunks(texts) # Dividir o texto em chunks
 
     for i in range(0, len(chunks), batch_size):
         batch_texts = chunks[i:i + batch_size]
@@ -158,7 +164,6 @@ def create_and_store_embeddings(
         print(f"Processed and stored batch {i//batch_size + 1} of {(len(texts)-1)//batch_size + 1}")
 
 
-
-def delete_collection(collection_name: str):
-    collection_name = normalize_name_collection(collection_name)
-    qdrant_client.delete_collection(collection_name)
+def normalize_name_collection(collection_name: str):
+    # cria um hash do nome da collection
+    return hashlib.md5(collection_name.encode()).hexdigest()

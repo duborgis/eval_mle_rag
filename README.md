@@ -1,26 +1,38 @@
 # avaliaca_mle_hotmart
-Repositorio para desenvolvimento case mle hotmart
+Repositório para desenvolvimento do case MLE Hotmart
+
+Teste rápido:
+
+GPU:
+``` make up-n-wait && make create-vector && make ask-script ```
+
+CPU:
+``` make up-n-wait-cpu && make create-vector && make ask-script ```
 
 ## Índice
 
 - [TODO](#todo)
 - [Comandos para uso e teste do projeto](#comandos-para-uso-e-teste-do-projeto)
   - [Requisitos Linux](#requisitos-linux)
+  - [Escolha do modelo LLM](#escolha-do-modelo-llm)
   - [Deploy dos containers](#deploy-dos-containers)
     - [Deploy com GPU](#deploy-com-gpu)
     - [Deploy com CPU](#deploy-com-cpu)
   - [Comandos para criação de embeddings e indexação](#comandos-para-criação-de-embeddings-e-indexação)
   - [Comandos para teste das APIs](#comandos-para-teste-das-apis)
-    - [Teste com perguntas pré definidas](#teste-com-perguntas-pré-definidas)
+    - [Teste com perguntas pré-definidas](#teste-com-perguntas-pré-definidas)
+    - [Outras formas de teste](#outras-formas-de-teste)
     - [Teste com Postman Collection](#teste-com-postman-collection)
     - [Teste utilizando Swagger UI](#teste-utilizando-swagger-ui)
 - [Informações do Projeto](#informações-do-projeto)
+  - [Stack e Tecnologias](#stack-e-tecnologias)
   - [Vector Database](#vector-database)
   - [Backend para as APIs](#backend-para-as-apis)
   - [Ollama](#ollama)
   - [Modelo de indexação](#modelo-de-indexação)
-- [Configurações para criação dos embedding](#configurações-para-criação-dos-embedding)
-- [Configurações para recuperação de informação](#configurações-para-recuperação-de-informação)
+- [Pipeline RAG](#pipeline-rag)
+  - [Configurações para criação dos embedding](#configurações-para-criação-dos-embedding)
+  - [Configurações para recuperação de informação](#configurações-para-recuperação-de-informação)
 - [Benchmarks](#benchmarks)
   - [llama3.2:3b](#llama32-3b)
   - [llama3.2:1b](#llama32-1b)
@@ -45,35 +57,37 @@ Repositorio para desenvolvimento case mle hotmart
 
 O modelo pode ser escolhido trocando a variável `MODEL` no arquivo `docker-compose.yml` ou  `docker-compose.cpu.yml`, essa variavel esta localizada no serviço `llm_api_service` 
 
+Model default: `llama3.2:3b`
+
 Lista de modelos disponíveis:
 
-| Model              | Parameters | Size  | Download                         |
-| ------------------ | ---------- | ----- | -------------------------------- |
-| Llama 3.2          | 3B         | 2.0GB | `ollama run llama3.2`            |
-| Llama 3.2          | 1B         | 1.3GB | `ollama run llama3.2:1b`         |
-| Llama 3.2 Vision   | 11B        | 7.9GB | `ollama run llama3.2-vision`     |
-| Llama 3.2 Vision   | 90B        | 55GB  | `ollama run llama3.2-vision:90b` |
-| Llama 3.1          | 8B         | 4.7GB | `ollama run llama3.1`            |
-| Llama 3.1          | 70B        | 40GB  | `ollama run llama3.1:70b`        |
-| Llama 3.1          | 405B       | 231GB | `ollama run llama3.1:405b`       |
-| Phi 3 Mini         | 3.8B       | 2.3GB | `ollama run phi3`                |
-| Phi 3 Medium       | 14B        | 7.9GB | `ollama run phi3:medium`         |
-| Gemma 2            | 2B         | 1.6GB | `ollama run gemma2:2b`           |
-| Gemma 2            | 9B         | 5.5GB | `ollama run gemma2`              |
-| Gemma 2            | 27B        | 16GB  | `ollama run gemma2:27b`          |
-| Mistral            | 7B         | 4.1GB | `ollama run mistral`             |
-| Moondream 2        | 1.4B       | 829MB | `ollama run moondream`           |
-| Neural Chat        | 7B         | 4.1GB | `ollama run neural-chat`         |
-| Starling           | 7B         | 4.1GB | `ollama run starling-lm`         |
-| Code Llama         | 7B         | 3.8GB | `ollama run codellama`           |
-| Llama 2 Uncensored | 7B         | 3.8GB | `ollama run llama2-uncensored`   |
-| LLaVA              | 7B         | 4.5GB | `ollama run llava`               |
-| Solar              | 10.7B      | 6.1GB | `ollama run solar`               |
+| Model              | Parameters | Size  | MODEL_NAME            |
+| ------------------ | ---------- | ----- | --------------------- |
+| Llama 3.2          | 3B         | 2.0GB | `llama3.2`            |
+| Llama 3.2          | 1B         | 1.3GB | `llama3.2:1b`         |
+| Llama 3.2 Vision   | 11B        | 7.9GB | `llama3.2-vision`     |
+| Llama 3.2 Vision   | 90B        | 55GB  | `llama3.2-vision:90b` |
+| Llama 3.1          | 8B         | 4.7GB | `llama3.1`            |
+| Llama 3.1          | 70B        | 40GB  | `llama3.1:70b`        |
+| Llama 3.1          | 405B       | 231GB | `llama3.1:405b`       |
+| Phi 3 Mini         | 3.8B       | 2.3GB | `phi3`                |
+| Phi 3 Medium       | 14B        | 7.9GB | `phi3:medium`         |
+| Gemma 2            | 2B         | 1.6GB | `gemma2:2b`           |
+| Gemma 2            | 9B         | 5.5GB | `gemma2`              |
+| Gemma 2            | 27B        | 16GB  | `gemma2:27b`          |
+| Mistral            | 7B         | 4.1GB | `mistral`             |
+| Moondream 2        | 1.4B       | 829MB | `moondream`           |
+| Neural Chat        | 7B         | 4.1GB | `neural-chat`         |
+| Starling           | 7B         | 4.1GB | `starling-lm`         |
+| Code Llama         | 7B         | 3.8GB | `codellama`           |
+| Llama 2 Uncensored | 7B         | 3.8GB | `llama2-uncensored`   |
+| LLaVA              | 7B         | 4.5GB | `llava`               |
+| Solar              | 10.7B      | 6.1GB | `solar`               |
 [Fonte](https://raw.githubusercontent.com/ollama/ollama/refs/heads/main/README.md)
 
 ## Deploy dos containers
 
-Os comandos estão setados para ambiente Linux apenas.
+Os comandos utilizam script shell e somente funcionam para ambiente Linux.
 
 Pelo terminal, navegue até a pasta deste projeto.
 
@@ -142,7 +156,7 @@ que recebe um form-data no seguinte formato:
 }
 ```
 
-- `/llm/ask` para responder uma pergunta
+- `/llm/ask` para fazer uma pergunta ao LLM com recuperação de informação do vector database. Para que a resposta seja mais assertiva, é necessário que o campo `title_rag` seja igual ao `title` do texto indexado no vector database.
 
 ```json
 {
@@ -181,6 +195,8 @@ Utilize o método POST `/llm/ask` para responder a pergunta
 
 # Informações do Projeto
 
+## Stack e Tecnologias
+
 ### Vector Database
 
 Foi escolhida Qdrant por ser escrita em Rust, assim é um banco de dados bastante performático, seguro contra erros e leve. Integração via `qdrant-client` para Python.
@@ -201,11 +217,28 @@ Ollama facilita o deploy de modelos LLM e por isso foi adicionado a esse projeto
 Modelo escolhido: `all-MiniLM-L6-v2`. Vantagens: Leve, rápido, ideal para gerar embeddings de texto com boa qualidade para recuperação semântica e Q&A. Compatível com hardware (RTX 3060 12GB).
 
 
-# Configurações para criação dos embedding
+## Pipeline RAG
 
+### Configurações para criação dos embedding
 
-# Configurações para recuperação de informação
+#### Divisão do texto em chunck
 
+Primeiramente o texto é dividido em chunks de 300 caracteres com 50 caracteres de overlap. O divisor de chunks é o ponto (.)
+Após isso, os chunks são verificados para que nao tenha chunks maiores que 300 caracteres. Caso tenha, o chunk é dividido em outros mais pequenos.
+Por fim, os chunks são limpos e normalizados para evitar espaços desnecessários.
+
+#### Criação da collection no vector database
+
+A collection é criada no vector database com o nome do valor do título do texto após a normalização, que é feita para evitar caracteres especiais e espaços desnecessários passando por uma função de hash. Caso a collection já exista, o sistema irá retornar um erro. A dimensão do vector na database é 384.
+
+#### Criação dos pontos (embeddings) no vector database
+
+Os chunks criados anteriormente são utilizados para criar os pontos (embeddings) no vector database. Cada ponto é composto por um id, um embedding e o payload que é composto pelo chunk de texto. 
+O embedding é criado pelo modelo `all-MiniLM-L6-v2` e a dimensão do embedding é 384, compativel com a collection criada.
+
+### Configurações para recuperação de informação
+
+A recuperação da informação é feita criando um vetor query com o texto da pergunta e comparando com os vetores de cada ponto da collection utilizando a métrica cosine similarity. Para coletar o texto relevante para a resposta, é feita uma busca por todos os pontos que possuem uma similaridade maior que 0.5 e o limite de resultados é 5. Esse valor é enviado como contexto para o modelo LLM.
 
 # Benchmarks
 

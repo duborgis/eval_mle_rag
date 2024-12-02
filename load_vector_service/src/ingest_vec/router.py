@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, File, UploadFile, Form, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from .utils import create_and_store_embeddings, vectorize_ask_function
+from .utils import create_and_store_embeddings, retrieve_similar_data
 from ..utils import generic_error_handler
 
 vector_router = APIRouter()
@@ -55,7 +55,6 @@ async def text_to_vector(
     
     create_and_store_embeddings(
         texts=text_str,
-        metadata_list=[data.model_dump()],
         collection_name=collection_name
     )
 
@@ -68,7 +67,7 @@ async def vectorize_ask(
 ):
     print(data)
     try:
-        search_result = vectorize_ask_function(data.question, data.collection_name)
+        search_result = retrieve_similar_data(data.question, data.collection_name)
         return JSONResponse(content={"detail": search_result}, status_code=status.HTTP_200_OK)
     except Exception as e:
         print(e)
