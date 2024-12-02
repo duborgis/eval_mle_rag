@@ -42,13 +42,10 @@
 					]
 				},
 				"url": {
-					"raw": "http://192.168.1.102:5002/vector/text-to-vector",
+					"raw": "http://localhost:5002/vector/text-to-vector",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"1",
-						"102"
+						"localhost"
 					],
 					"port": "5002",
 					"path": [
@@ -66,7 +63,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"question\": \"Qual o nome do CEO da Hotmart?\",\r\n    \"title_rag\": \"O que é Hotmart e como funciona? DESCUBRA TUDO!\"\r\n}",
+					"raw": "{\r\n    \"openapi\": \"3.1.0\",\r\n    \"info\": {\r\n        \"title\": \"FastAPI\",\r\n        \"version\": \"0.1.0\"\r\n    },\r\n    \"paths\": {\r\n        \"/\": {\r\n            \"get\": {\r\n                \"summary\": \"Health Check\",\r\n                \"operationId\": \"health_check__get\",\r\n                \"responses\": {\r\n                    \"200\": {\r\n                        \"description\": \"Successful Response\",\r\n                        \"content\": {\r\n                            \"application/json\": {\r\n                                \"schema\": {}\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        },\r\n        \"/llm/health\": {\r\n            \"get\": {\r\n                \"summary\": \"Health Route\",\r\n                \"operationId\": \"health_route_llm_health_get\",\r\n                \"responses\": {\r\n                    \"200\": {\r\n                        \"description\": \"Successful Response\",\r\n                        \"content\": {\r\n                            \"application/json\": {\r\n                                \"schema\": {}\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        },\r\n        \"/llm/generate-response\": {\r\n            \"post\": {\r\n                \"summary\": \"Generate Response Route\",\r\n                \"operationId\": \"generate_response_route_llm_generate_response_post\",\r\n                \"requestBody\": {\r\n                    \"content\": {\r\n                        \"application/json\": {\r\n                            \"schema\": {\r\n                                \"$ref\": \"#/components/schemas/LLMData\"\r\n                            }\r\n                        }\r\n                    },\r\n                    \"required\": true\r\n                },\r\n                \"responses\": {\r\n                    \"200\": {\r\n                        \"description\": \"Successful Response\",\r\n                        \"content\": {\r\n                            \"application/json\": {\r\n                                \"schema\": {}\r\n                            }\r\n                        }\r\n                    },\r\n                    \"422\": {\r\n                        \"description\": \"Validation Error\",\r\n                        \"content\": {\r\n                            \"application/json\": {\r\n                                \"schema\": {\r\n                                    \"$ref\": \"#/components/schemas/HTTPValidationError\"\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    },\r\n    \"components\": {\r\n        \"schemas\": {\r\n            \"HTTPValidationError\": {\r\n                \"properties\": {\r\n                    \"detail\": {\r\n                        \"items\": {\r\n                            \"$ref\": \"#/components/schemas/ValidationError\"\r\n                        },\r\n                        \"type\": \"array\",\r\n                        \"title\": \"Detail\"\r\n                    }\r\n                },\r\n                \"type\": \"object\",\r\n                \"title\": \"HTTPValidationError\"\r\n            },\r\n            \"LLMData\": {\r\n                \"properties\": {\r\n                    \"question\": {\r\n                        \"type\": \"string\",\r\n                        \"title\": \"Question\"\r\n                    },\r\n                    \"title_rag\": {\r\n                        \"type\": \"string\",\r\n                        \"title\": \"Title Rag\"\r\n                    }\r\n                },\r\n                \"type\": \"object\",\r\n                \"required\": [\r\n                    \"question\",\r\n                    \"title_rag\"\r\n                ],\r\n                \"title\": \"LLMData\"\r\n            },\r\n            \"ValidationError\": {\r\n                \"properties\": {\r\n                    \"loc\": {\r\n                        \"items\": {\r\n                            \"anyOf\": [\r\n                                {\r\n                                    \"type\": \"string\"\r\n                                },\r\n                                {\r\n                                    \"type\": \"integer\"\r\n                                }\r\n                            ]\r\n                        },\r\n                        \"type\": \"array\",\r\n                        \"title\": \"Location\"\r\n                    },\r\n                    \"msg\": {\r\n                        \"type\": \"string\",\r\n                        \"title\": \"Message\"\r\n                    },\r\n                    \"type\": {\r\n                        \"type\": \"string\",\r\n                        \"title\": \"Error Type\"\r\n                    }\r\n                },\r\n                \"type\": \"object\",\r\n                \"required\": [\r\n                    \"loc\",\r\n                    \"msg\",\r\n                    \"type\"\r\n                ],\r\n                \"title\": \"ValidationError\"\r\n            }\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,18 +71,44 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.1.102:5003/llm/generate-response",
+					"raw": "http://localhost:5003/llm/generate-response",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"1",
-						"102"
+						"localhost"
 					],
 					"port": "5003",
 					"path": [
 						"llm",
 						"generate-response"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "extract url",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"https://hotmart.com/pt-br/blog/como-funciona-hotmart\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/extract/extract-url",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"extract",
+						"extract-url"
 					]
 				}
 			},
