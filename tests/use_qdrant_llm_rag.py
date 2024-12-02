@@ -52,7 +52,7 @@ async def generate_response(question: str, collection_name: str) -> str:
     search_results = await get_vector_search_results(question, collection_name)
     prompt = create_prompt(question, search_results)
     response: ChatResponse = chat(model='llama3.2:1b', messages=[
-    {
+        {
             "role": "user",
             "content": prompt,
         },

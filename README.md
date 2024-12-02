@@ -127,7 +127,7 @@ Os dois principais endpoints das APIs são:
 
 - `/vector/text-to-vector` para criar o embedding de um texto
 
-que recebe um form-data no seguinte formato:
+que recebe um form-data no formato do seguinte exemplo:
 ```json
 {
   "key": "title",
