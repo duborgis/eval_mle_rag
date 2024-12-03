@@ -1,6 +1,7 @@
 # avaliaca_mle_hotmart
 Repositorio para desenvolvimento case mle hotmart
 
+
 # Contexto
 
 Na Hotmart, a principal capacidade que buscamos no prossional do futuro é a de **resolver desafios com protótipos que podem crescer e virar produtos incríveis.**
