@@ -58,6 +58,10 @@ Instancia de CPU (EC2) foi escolhida uma instancia melhor que o minimo, pois a i
 
 ![alt text](docs/assets/image-2.png)
 
+### Rodar teste rapido CPU
+
+Acesse a pasta deste repositorio pelo terminal e execute o comando a seguir
+
 CPU:
 ``` make up-n-wait-cpu && make create-vector && make ask-script ```
 
@@ -72,6 +76,11 @@ CPU:
 Instancia de GPU (Sagemaker):
 
 ![alt text](docs/assets/image-1.png)
+
+
+### Rodar teste rapido GPU
+
+Acesse a pasta deste repositorio pelo terminal e execute o comando a seguir
 
 GPU:
 ``` make up-n-wait && make create-vector && make ask-script ```
