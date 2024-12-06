@@ -88,7 +88,7 @@ def normalize_chunk(text: str):
     # Ex: pontuação, símbolos especiais, etc.
     # Pro caso de R$ pode ser ruim, pois o R$ é um símbolo monetário
     # O caso da % pode ser ruim, pois é um símbolo de porcentagem
-    text = re.sub(r"[^\w\s]", "", text)
+    # text = re.sub(r"[^\w\s]", "", text)
 
     # Converte todo o texto para minúsculo
     # Ex: "Olá Mundo" -> "olá mundo"
@@ -99,7 +99,7 @@ def normalize_chunk(text: str):
     # Muito ruim pois a primeira pergunta sobre "10% do valor do produto"
     # Vai ficar "valor do produto", perdemos o contexto e foi por isso que o RAG
     # perdeu a capacidade de responder a primeira pergunta ->Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil?
-    text = re.sub(r"[^a-zA-Z\s]", "", text)
+    # text = re.sub(r"[^a-zA-Z\s]", "", text)
 
     # Remove stopwords do português (palavras muito comuns que geralmente não agregam significado)
     # Ex: "o", "a", "para", "com", etc.
