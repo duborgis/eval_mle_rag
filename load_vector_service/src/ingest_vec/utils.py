@@ -76,17 +76,35 @@ def get_chunks(text: str):
         return []
 
 
+# é preciso tomar muito cuidado com o uso dessa função, pois ela é responsável
+# por limpar o texto para que o modelo de embeddings consiga entender o contexto
+# mas em varios casos, conforme comentado abaixo, PERDEMOS O CONTEXTO
+# importante verificar se o contexto está sendo preservado
 def normalize_chunk(text: str):
+    # Remove espaços em branco no início e fim do texto
     text = text.strip()
 
-    text = re.sub(r'[^\w\s]', '', text)
+    # Remove todos os caracteres que não são palavras ou espaços
+    # Ex: pontuação, símbolos especiais, etc.
+    # Pro caso de R$ pode ser ruim, pois o R$ é um símbolo monetário
+    # O caso da % pode ser ruim, pois é um símbolo de porcentagem
+    text = re.sub(r"[^\w\s]", "", text)
 
+    # Converte todo o texto para minúsculo
+    # Ex: "Olá Mundo" -> "olá mundo"
     text = text.lower()
 
-    text = re.sub(r'[^a-zA-Z\s]', '', text)
+    # Remove todos os caracteres que não são letras do alfabeto ou espaços
+    # Ex: remove números e outros caracteres especiais que sobraram
+    # Muito ruim pois a primeira pergunta sobre "10% do valor do produto"
+    # Vai ficar "valor do produto", perdemos o contexto e foi por isso que o RAG
+    # perdeu a capacidade de responder a primeira pergunta ->Qual é a taxa cobrada pela Hotmart por venda para produtos acima de R$10 no Brasil?
+    text = re.sub(r"[^a-zA-Z\s]", "", text)
 
-    stop_words = set(stopwords.words('portuguese'))
-    text = ' '.join([word for word in text.split() if word not in stop_words])
+    # Remove stopwords do português (palavras muito comuns que geralmente não agregam significado)
+    # Ex: "o", "a", "para", "com", etc.
+    stop_words = set(stopwords.words("portuguese"))
+    text = " ".join([word for word in text.split() if word not in stop_words])
 
     return text
 
