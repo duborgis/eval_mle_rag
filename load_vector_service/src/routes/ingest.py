@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status, File, UploadFile, Form, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from .utils import create_and_store_embeddings, retrieve_similar_data
-from ..utils import generic_error_handler
+from ..utils.ingest import create_and_store_embeddings, retrieve_similar_data
+from ..utils.logging import generic_error_handler
 import sys
 import os
 

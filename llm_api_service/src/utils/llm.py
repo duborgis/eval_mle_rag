@@ -2,37 +2,13 @@ import hashlib
 import requests
 import httpx
 from ..configs import VECTOR_SERVICE_URL, MODEL_NAME
-from ollama import ChatResponse
-from ollama import Client
+from ..modules.llms import Ollama
 
-client = Client(
-    host="http://ollama:11434",
-)
-
-
-def load_model_on_init():
-    client.pull(model=MODEL_NAME)
-
-
-load_model_on_init()
+ollama = Ollama(model_name=MODEL_NAME, host="localhost", port=11434)
 
 
 def normalize_name_collection(collection_name: str):
     return hashlib.md5(collection_name.encode()).hexdigest()
-
-
-def create_prompt(question: str, context_text: str) -> str:
-    prompt = f"""Baseado no contexto abaixo, responda a pergunta de forma clara e concisa. Mas traga as informações mais relevantes.
-    Se a resposta não puder ser encontrada no contexto, diga "Não tenho informações suficientes para responder."
-
-    Contexto:
-    {context_text}
-
-    Pergunta: {question}
-    
-    Resposta:"""
-
-    return prompt
 
 
 async def get_vector_search_results(question: str, collection_name: str) -> str:
@@ -58,19 +34,10 @@ async def get_vector_search_results(question: str, collection_name: str) -> str:
 async def generate_response(question: str, collection_name: str) -> str:
     try:
         search_results = await get_vector_search_results(question, collection_name)
-        prompt = create_prompt(question, search_results)
-        print(prompt)
-        response: ChatResponse = client.chat(
-            model=MODEL_NAME,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
-        )
+        prompt = ollama.create_prompt(question, search_results)
+        response = ollama.generate_response(prompt)
         return {
-            "response": response.message.content,
+            "response": response,
             "rag_search_results": search_results,
         }
     except Exception as e:

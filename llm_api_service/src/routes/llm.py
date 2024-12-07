@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from .utils import generate_response
-from ..utils import generic_error_handler
+from ..utils.llm import generate_response
+from ..utils.logging import generic_error_handler
 
 
 llm_router = APIRouter()
