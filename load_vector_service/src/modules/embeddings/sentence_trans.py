@@ -1,12 +1,13 @@
 from .abstract_class import AbstractEmbeddingModel
 from .utils import check_gpu_available
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 
 class StAllMiniEmbeddingModel(AbstractEmbeddingModel):
     def __init__(self, model_name: str):
         super().__init__(model_name)
         self.model = self.load_model()
+        self.vector_size = 384
 
     def load_model(self):
         device = "cuda" if check_gpu_available() else "cpu"
@@ -28,7 +29,7 @@ class StAllMiniEmbeddingModel(AbstractEmbeddingModel):
         embedding = self.model.embed_query(question)
         return embedding
 
-    def create_embeddings_batch(self, chunks: list[str], batch_size: int = 50):
+    def create_embeddings_batch(self, chunks: list[str], batch_size: int):
         embeddings = []
         for i in range(0, len(chunks), batch_size):
             batch_chunks = chunks[i : i + batch_size]
@@ -36,4 +37,4 @@ class StAllMiniEmbeddingModel(AbstractEmbeddingModel):
             batch_embeddings = self.model.embed_documents(batch_chunks)
             embeddings.append(batch_embeddings)
 
-        return embeddings
+        return embeddings[0]
