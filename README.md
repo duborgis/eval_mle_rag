@@ -650,3 +650,10 @@ R:  A Hotmart não exige nenhuma cobrança para o uso da plataforma gratuito. A 
 -   [ ] Testar a parametrização do Text Splitter ao gerar os embeddings
 -   [ ] Testar a possibilidade de gerar mais texto para indexação (Augmentation Techniques)
 -   [ ] Melhorar a interface de teste das APIs
+
+
+# Alucinações
+
+P: Quantos países a Hotmart possui escritórios atualmente?
+R:  A pergunta não foi encontrada no contexto fornecido. No entanto, na prática, a Hotmart é uma empresa brasileira e seu site principal está localizado em Porto Alegre (RS), mas isso não significa que ela não oferece serviços em outros países. É necessário realizar pesquisas adicionais para confirmar os escritórios atuais da Hotmart.
+

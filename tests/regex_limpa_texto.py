@@ -13,7 +13,6 @@ def normalize_chunk(text: str):
     # Remove espaços em branco no início e fim do texto
     text = text.strip()
     print(f"Strip: {text}\n")
-
     # Remove todos os caracteres que não são palavras ou espaços
     # Ex: pontuação, símbolos especiais, etc.
     # Pro caso de R$ pode ser ruim, pois o R$ é um símbolo monetário

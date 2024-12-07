@@ -31,7 +31,11 @@ serve-vector:
 serve-llm:
 	@cd llm_api_service && uvicorn src.main:app --host 0.0.0.0 --port 5003 --reload
 
+test-vector:
+	@cd load_vector_service/src/modules/tests && pytest tests.py -s
 
+test-llm:
+	@cd llm_api_service/src/modules/tests && pytest tests.py -s
 
 # comandos que serão utilizados pelo avaliador
 
