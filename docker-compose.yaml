@@ -41,6 +41,11 @@ services:
       - "5002:5002"
     volumes:
       - huggingface_cache:/root/.cache/huggingface
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
     deploy:
       resources:
         reservations:
@@ -62,6 +67,10 @@ services:
       - "5003:5003"
     environment:
       - MODEL_NAME=mistral
+      - VECTOR_SERVICE_HOST=load_vector_service
+      - VECTOR_SERVICE_PORT=5002
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
 
 volumes:
   ollama:

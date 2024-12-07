@@ -1,10 +1,10 @@
 import hashlib
 import requests
 import httpx
-from ..configs import VECTOR_SERVICE_URL, MODEL_NAME
+from ..configs import VECTOR_SERVICE_URL, MODEL_NAME, OLLAMA_HOST, OLLAMA_PORT
 from ..modules.llms import Ollama
 
-ollama = Ollama(model_name=MODEL_NAME, host="localhost", port=11434)
+ollama = Ollama(model_name=MODEL_NAME, host=OLLAMA_HOST, port=OLLAMA_PORT)
 
 
 def normalize_name_collection(collection_name: str):

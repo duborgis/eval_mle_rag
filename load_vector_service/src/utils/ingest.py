@@ -7,11 +7,14 @@ from src.modules.vector_db_clients import QdrantClientClass
 from src.modules.embeddings import OLLamaEmbeddingModel
 import sys
 import os
+from src.configs import OLLAMA_HOST, OLLAMA_PORT, QDRANT_HOST, QDRANT_PORT
 
 nltk.download("stopwords")
 
-qdrant_client = QdrantClientClass(url="localhost", port=6333)
-embeddings_model = OLLamaEmbeddingModel("test_model", host="localhost", port=11434)
+qdrant_client = QdrantClientClass(url=QDRANT_HOST, port=QDRANT_PORT)
+embeddings_model = OLLamaEmbeddingModel(
+    "test_model", host=OLLAMA_HOST, port=OLLAMA_PORT
+)
 
 
 def retrieve_similar_data(question: str, collection_name: str):
