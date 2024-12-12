@@ -11,3 +11,4 @@ python-multipart
 nltk
 bs4
 ollama
+vecs
